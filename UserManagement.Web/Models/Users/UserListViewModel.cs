@@ -15,5 +15,5 @@ public class UserListItemViewModel
     public string? Email { get; set; }
     public bool IsActive { get; set; }
 
-    public DateTime DateOfBirth {get; set;}
+    public DateOnly DateOfBirth {get; set;}
 }
