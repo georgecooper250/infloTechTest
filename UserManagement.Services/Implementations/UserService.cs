@@ -36,6 +36,7 @@ public class UserService(IDataContext dataAccess) : IUserService
     {
         return _dataAccess.GetAll<User>().FirstOrDefault(user => user.Id == userId);
     }
+    
 
     //Method to Delete a user by given ID.
     public bool DeleteUserById(int userId)
@@ -67,4 +68,6 @@ public class UserService(IDataContext dataAccess) : IUserService
             throw new KeyNotFoundException("User not found.");
         }
     }
+      public IEnumerable<Log> GetLogsForUser(int userId) => _dataAccess.GetAll<Log>().Where(user => user.UserId == userId);
+    public void CreateLogEntry(Log entry) => _dataAccess.Create(entry);
 }

@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System;
+using System.Text;
 using UserManagement.Models;
 using UserManagement.Services.Domain.Interfaces;
 using UserManagement.Web.Models.Users;
@@ -9,6 +11,9 @@ namespace UserManagement.WebMS.Controllers;
 public class UsersController(IUserService userService) : Controller
 {
     private readonly IUserService _userService = userService;
+
+        [BindProperty]
+    public User newUser { get; set; } = default!;
 
     [HttpGet]
     public ViewResult List(string status = "all")
@@ -68,6 +73,9 @@ public class UsersController(IUserService userService) : Controller
     [HttpPost("update")]
     public IActionResult EditUser(User user, int userId)
     {
+              var logEntry = new Log(userId, BuildLogEntry(userId), DateTime.Now);
+        _userService.CreateLogEntry(logEntry);
+
         if (ModelState.IsValid)
         {
             var updateUser = _userService.GetUserById(userId);
@@ -89,5 +97,28 @@ public class UsersController(IUserService userService) : Controller
         }
         return PartialView("_EditUserModal", user);
     }
+   private string BuildLogEntry(int userId) {
+        var log = new StringBuilder();
 
+        var oldUser = _userService.GetUserById(userId);
+
+    if(oldUser != null){
+        if(newUser.Forename != oldUser.Forename) {
+            log.AppendLine($"Forename changed from {oldUser.Forename} to {newUser.Forename}");
+        }
+        if(newUser.Surname != oldUser.Surname) {
+            log.AppendLine($"Surname changed from {oldUser.Surname} to {newUser.Surname}");
+        }
+        if(newUser.Email != oldUser.Email) {
+            log.AppendLine($"Email changed from {oldUser.Email} to {newUser.Email}");
+        }
+        if(newUser.IsActive != oldUser.IsActive) {
+            log.AppendLine($"Account Active changed from {(oldUser.IsActive ? "Yes" : "No")} to {(newUser.IsActive ? "Yes" : "No")}");
+        }
+        if(newUser.DateOfBirth != oldUser.DateOfBirth) {
+            log.AppendLine($"Date of Birth changed from {oldUser.DateOfBirth.ToString("dd/MM/yyyy")} to {newUser.DateOfBirth.ToString("dd/MM/yyyy")}");
+        }
+}
+        return log.ToString();
+    }
 }

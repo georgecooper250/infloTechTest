@@ -11,4 +11,6 @@ public interface IUserService
     User? GetUserById(int userId);
     bool DeleteUserById(int userId);
     void UpdateUser(User user);
+    IEnumerable<Log> GetLogsForUser(int userId);
+    void CreateLogEntry(Log entry);
 }
