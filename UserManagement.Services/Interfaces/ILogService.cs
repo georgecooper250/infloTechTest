@@ -7,5 +7,4 @@ public interface ILogService
 {
     IEnumerable<Log> GetLog(int id);
     IEnumerable<Log> GetAll();
-
 }

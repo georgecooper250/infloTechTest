@@ -48,8 +48,13 @@ public class UsersController(IUserService userService) : Controller
     {
         if (ModelState.IsValid)
         {
+            var builtLog = BuildLogEntry(user.Id);
+
             _userService.CreateUser(user);
             ViewBag.Success = "User successfully created!";
+
+        var logEntry = new Log(user.Id, builtLog, DateTime.Now);
+             _userService.CreateLogEntry(logEntry);
             return PartialView("_AddUserModal", new User()); 
         }
         return PartialView("_AddUserModal", user);
@@ -118,6 +123,9 @@ public class UsersController(IUserService userService) : Controller
         if(newUser.DateOfBirth != oldUser.DateOfBirth) {
             log.AppendLine($"Date of Birth changed from {oldUser.DateOfBirth.ToString("dd/MM/yyyy")} to {newUser.DateOfBirth.ToString("dd/MM/yyyy")}");
         }
+} else {
+        log.AppendLine($"New User {newUser.Forename} {newUser.Surname} created.");
+
 }
         return log.ToString();
     }

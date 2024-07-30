@@ -28,31 +28,12 @@
                     </td>
                     <td>
                         @item.TimeStamp
-                    </td>
-                    <td>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal" 
-                    data-content-url="/modals/viewUserLogs" data-title="User Logs" data-user-id="@item.LogId">View Log</a>
-                    </td>
-        
+                    </td>    
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!-- Dynamic Modal Content Loaded Here -->
-                <div id="modalContent"></div>
-            </div>
-        </div>
-    </div>
 
 <div>
     <div class="btn-group" role="group">

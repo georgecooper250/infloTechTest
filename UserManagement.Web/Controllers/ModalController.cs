@@ -50,16 +50,4 @@ public class ModalController(IUserService userService, ILogService logService) :
         }
         return PartialView("_DeleteUserModal", user);
     }
-
-       [HttpGet("viewUserLogs")]
-    public IActionResult ViewUserLogsModal(int logId)
-    {
-        var log = _logService.GetLog(logId);
-        if (log == null)
-        {
-            ViewBag.ErrorMessage = "Log not found.";
-            return PartialView("_ViewUserLogs");
-        }
-        return PartialView("_ViewUserLogs", log);
-    }
 }
